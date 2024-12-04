@@ -1,5 +1,9 @@
-
+import logging
 from abc import ABC, abstractmethod
+
+# Налаштування логування
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 class Book:
@@ -12,7 +16,8 @@ class Book:
         return self.title
 
     def show(self):
-        print(f'Title: {self.title}, Author: {self.author}, Year: {self.year}')
+        logging.info(
+            f'Title: {self.title}, Author: {self.author}, Year: {self.year}')
 
 
 class LibraryInterface(ABC):
@@ -36,14 +41,20 @@ class Library(LibraryInterface):
     def add_book(self, title, author, year):
         book = Book(title, author, year)
         self.books.append(book)
+        logging.info(f'Book added: {title} by {author}, {year}')
 
     def remove_book(self, title):
         for book in self.books:
             if book.get_title() == title:
                 self.books.remove(book)
+                logging.info(f'Book removed: {title}')
                 break
+        else:
+            logging.warning(f'Book not found: {title}')
 
     def show_books(self):
+        if not self.books:
+            logging.info('No books in the library.')
         for book in self.books:
             book.show()
 
@@ -84,7 +95,7 @@ def main():
             case "exit":
                 break
             case _:
-                print("Invalid command. Please try again.")
+                logging.warning("Invalid command. Please try again.")
 
 
 if __name__ == "__main__":

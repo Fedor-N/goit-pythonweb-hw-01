@@ -1,4 +1,9 @@
+import logging
 from abc import abstractmethod, ABC
+
+# Налаштування логування
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 class Vehicle(ABC):
@@ -13,7 +18,7 @@ class Car(Vehicle):
         self.model = model
 
     def start_engine(self):
-        print(f"{self.make} {self.model}: Двигун запущено")
+        logging.info(f"{self.make} {self.model}: Двигун запущено")
 
 
 class Motorcycle(Vehicle):
@@ -22,7 +27,7 @@ class Motorcycle(Vehicle):
         self.model = model
 
     def start_engine(self):
-        print(f"{self.make} {self.model}: Мотор заведено")
+        logging.info(f"{self.make} {self.model}: Мотор заведено")
 
 
 class VehicleFactory(ABC):
